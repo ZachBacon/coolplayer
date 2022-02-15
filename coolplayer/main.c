@@ -2029,7 +2029,7 @@ int     cmdline_parse_files(int argc, char **argv)
 	return wegotsome;
 }
 
-int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	WNDCLASS wc;
 	HWND    hWnd;

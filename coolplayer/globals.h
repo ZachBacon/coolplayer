@@ -157,7 +157,7 @@ typedef void* CP_HSYSICON;
 
 // Main graphics bitmaps
 
-struct
+static struct
 {
 	HBITMAP bmp_main_up;
 	HBITMAP bmp_main_down;
@@ -172,7 +172,7 @@ struct
 
 // Window pointers
 
-struct
+static struct
 {
 	HWND wnd_main;
 	HWND    dlg_playlist;
@@ -188,7 +188,7 @@ struct
 
 // Drawable areas
 
-struct
+static struct
 {
 	HDC     dc_memory;
 	HDC     dc_main;
@@ -197,7 +197,7 @@ struct
 
 // Bitmaps for playlist
 
-struct
+static struct
 {
 	SIZE    UpLeft;
 	SIZE    UpRight;
@@ -357,7 +357,7 @@ void    playlist_move_control(int ControlID, LPRECT NewPlaylistrect,
 							  int type);
 void    url_create(HWND hWnd);
 
-struct
+static struct
 {
 	BOOL    auto_exit_after_playing;
 	BOOL    auto_play_when_started;
@@ -403,7 +403,7 @@ struct
 #define BITRATE_STRLEN	40
 #define FREQ_STRLEN	40
 
-struct
+static struct
 {
 	BOOL    playlist_bool_addsong;
 	DWORD playlist_last_add_time;
@@ -447,6 +447,6 @@ struct
 	CPe_MixerMode m_enMixerMode;
 } globals;
 
-CoolSkin Skin;
+static CoolSkin Skin;
 
 #endif

@@ -3,7 +3,16 @@ project('coolplayer', 'c',
     license : 'GPL-2.0-or-later',
     default_options : ['warning_level=3', 'c_std=c11'])
 
-cooldep = [dependency('ogg'), dependency('vorbis'), dependency('mad'), dependency('zlib')]
+cc = meson.get_compiler('c')
+
+vorbisdep = dependency('vorbis', static : true)
+oggdep = dependency('ogg', static : true)
+maddep = dependency('mad', static : true)
+zlibdep = dependency('zlib', static : true)
+winmm = cc.find_library('winmm')
+comctl32 = cc.find_library('comctl32')
+wininet = cc.find_library('wininet')
+dsound = cc.find_library('dsound')
 
 wrc = find_program('windres')
 res_ext = '.o'
@@ -60,4 +69,4 @@ coolsrc = files([
     'WindowsOS.c'
 ])
 
-coolplayer_exe = executable('coolplayer', coolsrc, coolres, dependencies : cooldep)
+coolplayer_exe = executable('coolplayer', coolsrc, coolres, dependencies : [zlibdep, oggdep, vorbisdep, maddep, winmm, comctl32, wininet, dsound])
