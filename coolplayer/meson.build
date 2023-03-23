@@ -6,6 +6,7 @@ project('coolplayer', 'c',
 cc = meson.get_compiler('c')
 
 vorbisdep = dependency('vorbis', static : true)
+vorbisfiledep = dependency('vorbisfile', static : true)
 oggdep = dependency('ogg', static : true)
 maddep = dependency('mad', static : true)
 zlibdep = dependency('zlib', static : true)
@@ -69,4 +70,4 @@ coolsrc = files([
     'WindowsOS.c'
 ])
 
-coolplayer_exe = executable('coolplayer', coolsrc, coolres, dependencies : [zlibdep, oggdep, vorbisdep, maddep, winmm, comctl32, wininet, dsound])
+coolplayer_exe = executable('coolplayer', coolsrc, coolres, dependencies : [zlibdep, oggdep, vorbisdep, vorbisfiledep, maddep, winmm, comctl32, wininet, dsound])
