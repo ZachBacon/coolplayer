@@ -56,6 +56,9 @@ DWORD WINAPI CPI_Player__EngineEP(void* pCookie)
 	HRESULT hr_ComState;
 	CPs_PlayerContext playercontext;
 	
+	// Zero-initialize the entire structure to prevent garbage pointers
+	memset(&playercontext, 0, sizeof(playercontext));
+	
 	playercontext.m_pBaseEngineParams = (CPs_PlayEngine*)pCookie;
 	playercontext.m_bOutputActive = FALSE;
 	playercontext.m_iProportion_TrackLength = 0;
@@ -83,6 +86,9 @@ DWORD WINAPI CPI_Player__EngineEP(void* pCookie)
 	CPI_Player_Output_Initialise_WaveMapper(&playercontext.m_OutputModules[CP_OUTPUT_WAVE]);
 	CPI_Player_Output_Initialise_DirectSound(&playercontext.m_OutputModules[CP_OUTPUT_DIRECTSOUND]);
 	CPI_Player_Output_Initialise_File(&playercontext.m_OutputModules[CP_OUTPUT_FILE]);
+#ifdef HAVE_FAUDIO
+	CPI_Player_Output_Initialise_FAudio(&playercontext.m_OutputModules[CP_OUTPUT_FAUDIO]);
+#endif
 	
 	playercontext.m_pCurrentOutputModule = &playercontext.m_OutputModules[playercontext.m_dwCurrentOutputModule];
 	
@@ -91,6 +97,13 @@ DWORD WINAPI CPI_Player__EngineEP(void* pCookie)
 	
 	{
 		CPs_PlayEngine* player = (CPs_PlayEngine*)pCookie;
+		
+		// Validate that the player structure is accessible before writing to it
+		if (!player) {
+			CP_TRACE0("Player pointer is NULL");
+			return 1;
+		}
+		
 		player->m_pContext = &playercontext;
 	}
 	
@@ -343,7 +356,7 @@ DWORD WINAPI CPI_Player__EngineEP(void* pCookie)
 			
 			if (bForceRefill == TRUE || dwWaitResult == WAIT_OBJECT_0)
 			{
-				if (playercontext.m_pCurrentOutputModule->m_pCoDec)
+				if (playercontext.m_pCurrentOutputModule && playercontext.m_pCurrentOutputModule->m_pCoDec)
 				{
 					playercontext.m_pCurrentOutputModule->RefillBuffers(playercontext.m_pCurrentOutputModule);
 					

@@ -118,6 +118,13 @@ void CPP_OMFL_Initialise(CPs_OutputModule* pModule, const CPs_FileInfo* pFileInf
 void CPP_OMFL_Uninitialise(CPs_OutputModule* pModule)
 {
 	CPs_OutputContext_File* pContext = (CPs_OutputContext_File*)pModule->m_pModuleCookie;
+	
+	// Safety check: if module was never initialized, cookie will be NULL or garbage
+	if (pContext == NULL || (uintptr_t)pContext == 0xffffffffffffffff || IsBadReadPtr(pContext, sizeof(CPs_OutputContext_File))) {
+		CP_TRACE0("File output module uninitialize called but was never initialized or has garbage pointer");
+		return;
+	}
+	
 	CP_CHECKOBJECT(pContext);
 	CP_TRACE0("Wave out shutting down");
 	SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_NORMAL);
@@ -146,6 +153,12 @@ void CPP_OMFL_RefillBuffers(CPs_OutputModule* pModule)
 	BOOL bMoreData;
 	DWORD dwBufferLength = CPC_OUTPUTBLOCKSIZE;
 	BYTE lpData[CPC_OUTPUTBLOCKSIZE];
+	
+	// Safety check: ensure module pointer is valid
+	if (pModule == NULL || IsBadReadPtr(pModule, sizeof(CPs_OutputModule))) {
+		CP_TRACE0("File output RefillBuffers called with invalid module pointer");
+		return;
+	}
 	
 	CPs_OutputContext_File* pContext = (CPs_OutputContext_File*)pModule->m_pModuleCookie;
 	CP_CHECKOBJECT(pContext);

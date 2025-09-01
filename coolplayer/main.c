@@ -2042,7 +2042,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	HWND hWndCoolPlayer = NULL;
 	
 	// Ensure that this system is audio capable
-	
 	if (waveOutGetNumDevs() < 1)
 	{
 		MessageBox(GetDesktopWindow(), "No audio devices in this system", CP_COOLPLAYER, MB_ICONSTOP | MB_OK);
@@ -2111,11 +2110,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//    options.equalizer = FALSE;
 	globals.main_bool_slider_keep_focus = FALSE;
 	globals.main_int_skin_last_number = 5001;
+	
+	// Initialize windows structure
+	memset(&windows, 0, sizeof(windows));
 	windows.m_hWndFindDialog = NULL;
+	
+	// Initialize other global structures
+	memset(&drawables, 0, sizeof(drawables));
+	memset(&graphics, 0, sizeof(graphics));
+	
 	globals.playlist_int_last_searched_track = 0;
 	globals.m_iLastPlaylistSortColoumn = -1;
 	globals.m_bQuickFindWindowPos_Valid = FALSE;
 	globals.m_hPlaylist = CPL_CreatePlaylist();
+	if (globals.m_hPlaylist == NULL) {
+		return -1;
+	}
 	globals.m_hhkListView_Posted = NULL;
 	globals.playlist_bool_addsong = FALSE;
 	globals.playlist_last_add_time = 0;
@@ -2218,6 +2228,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			
 			if (hWnd)
 			{
+				// Set the main window handle in globals
+				windows.wnd_main = hWnd;
+				windows.m_hWndMain = hWnd;
+				
 				if (options.show_on_taskbar)
 				{
 					SetWindowLong(hWnd, GWL_EXSTYLE,
@@ -2250,8 +2264,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 											 Skin.Object[PositionSlider].maxw ? Skin.Object[PositionSlider].h : Skin.Object[PositionSlider].w);
 				CP_InitWindowsRoutines();
 				IF_ProcessInit();
-				//  CPlayerWindow_Create();
-				CPlaylistWindow_Create();
+				
+				// Check if glb_pSkin is initialized before creating playlist window
+				extern CPs_Skin* glb_pSkin;
+				
+				if (glb_pSkin != NULL) {
+					//  CPlayerWindow_Create();
+					CPlaylistWindow_Create();
+				}
 				
 				window_set_always_on_top(hWnd, options.always_on_top);
 				
@@ -2268,17 +2288,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 					
 					if (!wegotsome || globals.playlist_bool_addsong == TRUE)
 					{
-						if ((CPL_GetFirstItem(globals.m_hPlaylist)
+						if (globals.m_hPlaylist == NULL) {
+							return -1;
+						}
+						
+						CP_HPLAYLISTITEM firstItem = CPL_GetFirstItem(globals.m_hPlaylist);
+						
+						if ((firstItem
 								&& globals.playlist_bool_addsong == TRUE
 								&& options.remember_playlist == TRUE)
 								|| (options.remember_playlist == TRUE
-									&& CPL_GetFirstItem(globals.m_hPlaylist) == NULL))
+									&& firstItem == NULL))
 						{
 							char pcPlaylistFilename[MAX_PATH];
 							main_get_program_path(GetModuleHandle(NULL), pcPlaylistFilename, MAX_PATH);
 							strcat(pcPlaylistFilename, "default.m3u");
 							
 							CPL_SyncLoadNextFile(globals.m_hPlaylist);
+							
 							CPL_SetAutoActivateInitial(globals.m_hPlaylist, TRUE);
 							CPL_AddFile(globals.m_hPlaylist, pcPlaylistFilename);
 							CPL_SetAutoActivateInitial(globals.m_hPlaylist, FALSE);
@@ -2347,7 +2374,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				
 				return (int)msg.wParam;
 			}
+			else
+			{
+				// CreateWindowEx failed
+			}
 		}
+		else
+		{
+			// RegisterClass failed
+		}
+	}
+	else
+	{
+		// graphics.bmp_main_up is NULL
 	}
 	
 	return -1;

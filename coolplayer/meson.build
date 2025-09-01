@@ -10,10 +10,15 @@ vorbisfiledep = dependency('vorbisfile', static : true)
 oggdep = dependency('ogg', static : true)
 maddep = dependency('mad', static : true)
 zlibdep = dependency('zlib', static : true)
+faudiodep = dependency('FAudio', required : false, static : true)
 winmm = cc.find_library('winmm')
 comctl32 = cc.find_library('comctl32')
 wininet = cc.find_library('wininet')
 dsound = cc.find_library('dsound')
+mfplat = cc.find_library('mfplat')
+propsys = cc.find_library('propsys')
+mfuuid = cc.find_library('mfuuid')
+mfreadwrite = cc.find_library('mfreadwrite')
 
 wrc = find_program('windres')
 res_ext = '.o'
@@ -47,7 +52,9 @@ coolsrc = files([
     'CPI_Player_Engine.c',
     'CPI_Player_FileAssoc.c',
     'CPI_Player_Output_DirectSound.c',
+    'CPI_Player_Output_FAudio.c',
     'CPI_Player_Output_File.c',
+    'CPI_Player_Output_Wave.c',
     'CPI_Player_Output_Wave.c',
     'CPI_Playlist.c',
     'CPI_Playlist_Callbacks.c',
@@ -59,6 +66,7 @@ coolsrc = files([
     'CPI_Verbs.c',
     'CPSK_Skin.c',
     'DLG_Find.c',
+    'globals.c',
     'main.c',
     'options.c',
     'profile.c',
@@ -70,4 +78,13 @@ coolsrc = files([
     'WindowsOS.c'
 ])
 
-coolplayer_exe = executable('coolplayer', coolsrc, coolres, dependencies : [zlibdep, oggdep, vorbisdep, vorbisfiledep, maddep, winmm, comctl32, wininet, dsound])
+# Determine dependencies based on availability
+deps = [zlibdep, oggdep, vorbisdep, vorbisfiledep, maddep, winmm, comctl32, wininet, dsound]
+if faudiodep.found()
+    deps += [faudiodep, mfplat, propsys, mfuuid, mfreadwrite]
+    add_project_arguments('-DHAVE_FAUDIO', language : 'c')
+endif
+
+coolplayer_exe = executable('coolplayer', coolsrc, coolres, 
+    dependencies : deps,
+    win_subsystem : 'windows')

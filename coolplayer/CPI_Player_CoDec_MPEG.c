@@ -430,6 +430,8 @@ void CP_InitialiseCodec_MPEG(CPs_CoDecModule* pCoDec)
 	CPFA_AddFileAssociation(pCoDec, "MP3", 0L);
 	CPFA_AddFileAssociation(pCoDec, "MP2", 0L);
 	CPFA_AddFileAssociation(pCoDec, "MP1", 0L);
+	CPFA_AddFileAssociation(pCoDec, "MPEG", 0L);
+	CPFA_AddFileAssociation(pCoDec, "MPG", 0L);
 }
 
 

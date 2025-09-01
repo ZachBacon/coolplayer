@@ -56,6 +56,12 @@ CP_HPLAYER CPI_Player__Create(HWND hWndMain)
 	
 	// Thread control object
 	pNewPlayEngine = (CPs_PlayEngine*)malloc(sizeof(CPs_PlayEngine));
+	if (!pNewPlayEngine)
+		return NULL;
+		
+	// Zero-initialize the structure to prevent garbage values
+	memset(pNewPlayEngine, 0, sizeof(CPs_PlayEngine));
+	
 	pNewPlayEngine->m_hWndNotify = hWndMain;
 	
 	// Create event that will be signaled when the thread is ready for input

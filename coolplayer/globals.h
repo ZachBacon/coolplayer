@@ -157,7 +157,9 @@ typedef void* CP_HSYSICON;
 
 // Main graphics bitmaps
 
-static struct
+// Graphics bitmaps
+
+typedef struct
 {
 	HBITMAP bmp_main_up;
 	HBITMAP bmp_main_down;
@@ -168,11 +170,13 @@ static struct
 	HBITMAP bmp_main_title_area;
 	HBITMAP bmp_playlist_bg;
 	HPALETTE pal_main;
-} graphics;
+} graphics_t;
+
+extern graphics_t graphics;
 
 // Window pointers
 
-static struct
+typedef struct
 {
 	HWND wnd_main;
 	HWND    dlg_playlist;
@@ -184,20 +188,24 @@ static struct
 	HWND    m_hWndPlaylist;
 	CP_HINTERFACE m_hifMain;
 	CP_HINTERFACE m_hifPlaylist;
-} windows;
+} windows_t;
+
+extern windows_t windows;
 
 // Drawable areas
 
-static struct
+typedef struct
 {
 	HDC     dc_memory;
 	HDC     dc_main;
-} drawables;
+} drawables_t;
+
+extern drawables_t drawables;
 
 
 // Bitmaps for playlist
 
-static struct
+typedef struct
 {
 	SIZE    UpLeft;
 	SIZE    UpRight;
@@ -210,7 +218,9 @@ static struct
 	SIZE    MinSize;
 	SIZE    Colors;
 	HBITMAP bm[16];
-} PlayListBitmap;
+} PlayListBitmap_t;
+
+extern PlayListBitmap_t PlayListBitmap;
 
 // Playist item structure.
 
@@ -357,7 +367,7 @@ void    playlist_move_control(int ControlID, LPRECT NewPlaylistrect,
 							  int type);
 void    url_create(HWND hWnd);
 
-static struct
+typedef struct
 {
 	BOOL    auto_exit_after_playing;
 	BOOL    auto_play_when_started;
@@ -398,12 +408,14 @@ static struct
 	unsigned char main_skin_file[MAX_PATH];
 	unsigned int seconds_delay_after_track;
 	CPe_QuickFindTerm m_enQuickFindTerm;
-} options;
+} options_t;
+
+extern options_t options;
 
 #define BITRATE_STRLEN	40
 #define FREQ_STRLEN	40
 
-static struct
+typedef struct
 {
 	BOOL    playlist_bool_addsong;
 	DWORD playlist_last_add_time;
@@ -445,8 +457,10 @@ static struct
 	BOOL m_bOptions_ChangedSkin;
 	CP_HSYSICON m_hSysIcon;
 	CPe_MixerMode m_enMixerMode;
-} globals;
+} globals_t;
 
-static CoolSkin Skin;
+extern globals_t globals;
+
+extern CoolSkin Skin;
 
 #endif

@@ -173,7 +173,7 @@ void IF_OpenWindow(CP_HINTERFACE hInterface, const char* pcTitle, const RECT* pI
 	pState->m_bSkipRegion = FALSE;
 	
 	// Create Windows window
-	CreateWindowEx(WS_EX_ACCEPTFILES,
+	HWND hWnd = CreateWindowEx(WS_EX_ACCEPTFILES,
 				   CLC_COOLPLAYER_INTERFACECLASSNAME,
 				   pcTitle,
 				   WS_POPUP | WS_CLIPCHILDREN | WS_SYSMENU
@@ -318,7 +318,7 @@ LRESULT CALLBACK exp_InterfaceWindowProc(HWND hWnd, UINT uiMessage, WPARAM wPara
 	}
 	
 	else
-		pState = (CPs_InterfaceWindowState*)GetWindowLong(hWnd, GWLP_USERDATA);
+		pState = (CPs_InterfaceWindowState*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
 		
 	// We get some messages before the window gets it's WM_NCCREATE!!! (just how bad is Windows eh???)
 	if (!pState)
@@ -416,7 +416,6 @@ LRESULT CALLBACK exp_InterfaceWindowProc(HWND hWnd, UINT uiMessage, WPARAM wPara
 			IF_UpdateSubPartLayout(pState);
 			
 			// Callback
-			
 			if (pState->m_hndlr_onCreate)
 			{
 				RECT rInitialPos;
@@ -799,9 +798,12 @@ void IF_SetMinSize(CP_HINTERFACE hInterface, const SIZE* pMinSize)
 	
 	// Init
 	pState = (CPs_InterfaceWindowState*)hInterface;
+	
 	CP_CHECKOBJECT(pState);
 	
-	pState->m_szMinSize = *pMinSize;
+	if (pMinSize) {
+		pState->m_szMinSize = *pMinSize;
+	}
 }
 
 //

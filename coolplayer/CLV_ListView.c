@@ -174,9 +174,11 @@ CP_HLISTVIEW CLV_Create(HWND hWndParent, const int iX, const int iY, const int i
 	wcPlaylist.hbrBackground = (HBRUSH)GetStockObject(HOLLOW_BRUSH); // Prevent the system drawing white over our invaid rgn before we can paint
 	wcPlaylist.lpszMenuName = NULL;
 	wcPlaylist.lpszClassName = CLC_COOLPLAYER_LISTVIEW_WINDOWCLASSNAME;
+	
 	RegisterClass(&wcPlaylist);
 	
 	pListData = (CIs_ListViewData*)malloc(sizeof(CIs_ListViewData));
+	
 	pListData->m_bInBatch = FALSE;
 	pListData->m_iBatchNesting = 0;
 	pListData->m_bHasFocus = FALSE;
@@ -212,7 +214,6 @@ CP_HLISTVIEW CLV_Create(HWND hWndParent, const int iX, const int iY, const int i
 								NULL,
 								GetModuleHandle(NULL),
 								pListData);
-	                            
 	                            
 	return (CP_HLISTVIEW)pListData;
 }
@@ -1037,9 +1038,9 @@ void CLV_Handle_WM_PAINT(CIs_ListViewData* pListData)
 								if (enDrawColour == cdcNormal)
 									SetTextColor(drawcontext.m_dcDraw, glb_pSkin->mpl_ListTextColour);
 								else if (enDrawColour == cdcLowlighted)
-									SetTextColor(drawcontext.m_dcDraw, RGB(0, 0, 0));
+									SetTextColor(drawcontext.m_dcDraw, glb_pSkin->mpl_ListTextColour_HotItem); // Use skin color instead of hardcoded black
 								else
-									SetTextColor(drawcontext.m_dcDraw, RGB(255, 255, 255));
+									SetTextColor(drawcontext.m_dcDraw, glb_pSkin->mpl_ListTextColour_Selected); // Use skin color instead of hardcoded white
 							}
 							
 							else
@@ -2407,7 +2408,7 @@ LRESULT CALLBACK exp_ListViewWindowProc(HWND hWnd, UINT uiMessage, WPARAM wParam
 	}
 	
 	else
-		pListData = (CIs_ListViewData*)GetWindowLong(hWnd, GWLP_USERDATA);
+		pListData = (CIs_ListViewData*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
 		
 	CP_CHECKOBJECT(pListData);
 	

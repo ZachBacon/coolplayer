@@ -101,6 +101,9 @@ void CP_InitialiseCodec_OGG(CPs_CoDecModule* pCoDec)
 	
 	CPFA_InitialiseFileAssociations(pCoDec);
 	CPFA_AddFileAssociation(pCoDec, "OGA", 0L);
+	CPFA_AddFileAssociation(pCoDec, "OGG", 0L);
+	CPFA_AddFileAssociation(pCoDec, "OGV", 0L);  // OGG Video (audio track)
+	CPFA_AddFileAssociation(pCoDec, "OGX", 0L);  // OGG multiplex
 }
 
 //

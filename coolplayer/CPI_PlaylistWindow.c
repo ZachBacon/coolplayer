@@ -196,8 +196,10 @@ void CPlaylistWindow_CreateListView()
 	int iColumnIDX;
 	
 	// Create listview control
-	GetClientRect(IF_GetHWnd(windows.m_hifPlaylist), &rClient);
-	globals.m_hPlaylistViewControl = CLV_Create(IF_GetHWnd(windows.m_hifPlaylist),
+	HWND hPlaylistWnd = IF_GetHWnd(windows.m_hifPlaylist);
+	GetClientRect(hPlaylistWnd, &rClient);
+	
+	globals.m_hPlaylistViewControl = CLV_Create(hPlaylistWnd,
 									 glb_pSkin->mpl_rList_Border.left, glb_pSkin->mpl_rList_Border.top,
 									 (rClient.right - glb_pSkin->mpl_rList_Border.right) - glb_pSkin->mpl_rList_Border.left,
 									 (rClient.bottom - glb_pSkin->mpl_rList_Border.bottom) - glb_pSkin->mpl_rList_Border.top);
