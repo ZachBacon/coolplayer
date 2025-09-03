@@ -74,6 +74,7 @@ DWORD WINAPI CPI_Player__EngineEP(void* pCookie)
 	CP_InitialiseCodec_MPEG(&playercontext.m_CoDecs[CP_CODEC_MPEG]);
 	CP_InitialiseCodec_WAV(&playercontext.m_CoDecs[CP_CODEC_WAV]);
 	CP_InitialiseCodec_OGG(&playercontext.m_CoDecs[CP_CODEC_OGG]);
+	CP_InitialiseCodec_FLAC(&playercontext.m_CoDecs[CP_CODEC_FLAC]);
 	CP_InitialiseCodec_WinAmpPlugin(&playercontext.m_CoDecs[CP_CODEC_WINAMPPLUGIN]);
 	
 	// Initialise output module

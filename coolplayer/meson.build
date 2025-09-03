@@ -9,6 +9,7 @@ vorbisdep = dependency('vorbis', static : true)
 vorbisfiledep = dependency('vorbisfile', static : true)
 oggdep = dependency('ogg', static : true)
 maddep = dependency('mad', static : true)
+flacdep = dependency('flac', static : true)
 zlibdep = dependency('zlib', static : true)
 faudiodep = dependency('FAudio', required : false, static : true)
 winmm = cc.find_library('winmm')
@@ -48,6 +49,7 @@ coolsrc = files([
     'CPI_Player_CoDec_MPEG.c',
     'CPI_Player_CoDec_OGG.c',
     'CPI_Player_CoDec_WAV.c',
+    'CPI_Player_CoDec_FLAC.c',
     'CPI_Player_CoDec_WinAmpPlugin.c',
     'CPI_Player_Engine.c',
     'CPI_Player_FileAssoc.c',
@@ -79,7 +81,7 @@ coolsrc = files([
 ])
 
 # Determine dependencies based on availability
-deps = [zlibdep, oggdep, vorbisdep, vorbisfiledep, maddep, winmm, comctl32, wininet, dsound]
+deps = [zlibdep, oggdep, vorbisdep, vorbisfiledep, maddep, flacdep, winmm, comctl32, wininet, dsound]
 if faudiodep.found()
     deps += [faudiodep, mfplat, propsys, mfuuid, mfreadwrite]
     add_project_arguments('-DHAVE_FAUDIO', language : 'c')
