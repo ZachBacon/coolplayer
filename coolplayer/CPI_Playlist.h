@@ -66,7 +66,7 @@ typedef enum _CPe_ItemStackState
 //
 //
 // Playlist control
-CP_HPLAYLIST CPL_CreatePlaylist();
+CP_HPLAYLIST CPL_CreatePlaylist(void);
 void CPL_DestroyPlaylist(CP_HPLAYLIST hPlaylist);
 //
 void CPL_Empty(CP_HPLAYLIST hPlaylist);
@@ -111,12 +111,12 @@ CP_HPLAYLISTITEM CPL_FindPlaylistItem(CP_HPLAYLIST hPlaylist, const char* pcPath
 void CPL_cb_OnItemUpdated(const CP_HPLAYLISTITEM hItem);
 void CPL_cb_OnPlaylistAppend(const CP_HPLAYLISTITEM hItem);
 void CPL_cb_OnPlaylistItemDelete(const CP_HPLAYLISTITEM hItem);
-void CPL_cb_OnPlaylistEmpty();
+void CPL_cb_OnPlaylistEmpty(void);
 void CPL_cb_OnPlaylistActivationChange(const CP_HPLAYLISTITEM hItem, const BOOL bNewActiveState);
-void CPL_cb_OnPlaylistActivationEmpty();
-void CPL_cb_SetWindowToReflectList();
+void CPL_cb_OnPlaylistActivationEmpty(void);
+void CPL_cb_SetWindowToReflectList(void);
 void CPL_cb_LockWindowUpdates(const BOOL bLock);
-void CPL_cb_TrackStackChanged();
+void CPL_cb_TrackStackChanged(void);
 ////////////////////////////////////////////////////////////////////////////////
 
 

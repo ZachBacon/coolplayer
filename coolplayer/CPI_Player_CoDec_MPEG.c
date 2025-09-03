@@ -457,6 +457,7 @@ void CPP_OMMP3_Uninitialise(CPs_CoDecModule* pModule)
  */
 BOOL CPP_OMMP3_OpenFile(CPs_CoDecModule* pModule, char const *path, DWORD dwCookie, HWND hWndOwner)
 {
+	(void)dwCookie;  // Suppress unused parameter warning
 	CPs_CoDec_MPEG *context = (CPs_CoDec_MPEG *)pModule->m_pModuleCookie;
 	int iStreamStart = 0;
 	

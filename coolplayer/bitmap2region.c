@@ -169,6 +169,7 @@ HRGN main_bitmap_to_region(HBITMAP hBmp, COLORREF cTransparentColor)
 //
 HRGN main_bitmap_to_region_1bit(HBITMAP hBmp, COLORREF cTransparentColor)
 {
+	(void)cTransparentColor;  // Suppress unused parameter warning
 	HRGN hRgn = NULL;
 	BYTE* pBitmapBits = NULL;
 	BYTE* pBitmapCursor;

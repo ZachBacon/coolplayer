@@ -263,7 +263,7 @@ const char* CPLI_GetGenre(const CP_HPLAYLISTITEM hItem)
 //
 //
 //
-const unsigned char CPLI_GetTrackNum(const CP_HPLAYLISTITEM hItem)
+unsigned char CPLI_GetTrackNum(const CP_HPLAYLISTITEM hItem)
 {
 	CPs_PlaylistItem* pItem = (CPs_PlaylistItem*)hItem;
 	CP_CHECKOBJECT(pItem);

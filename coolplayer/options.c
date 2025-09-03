@@ -26,6 +26,7 @@
 INT_PTR CALLBACK
 url_windowproc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	(void)lParam;  // Suppress unused parameter warning
 	switch (msg)
 	{
 	
@@ -69,6 +70,7 @@ url_windowproc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 INT_PTR CALLBACK
 options_windowproc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	(void)lParam;  // Suppress unused parameter warning
 
 	switch (msg)
 	{

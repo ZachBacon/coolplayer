@@ -33,7 +33,7 @@ wp_TrackMouseEvent pfnTrackMouseEvent;
 //
 //
 //
-void CP_InitWindowsRoutines()
+void CP_InitWindowsRoutines(void)
 {
 	HMODULE hmUser32 = GetModuleHandle("USER32");
 	pfnGetMonitorInfo = (wp_GetMonitorInfo)GetProcAddress(hmUser32, "GetMonitorInfoA");

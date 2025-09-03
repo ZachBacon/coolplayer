@@ -266,7 +266,7 @@ void    options_read(void)
 	}
 }
 
-void    options_write()
+void    options_write(void)
 {
 	char    intbuf[33];
 	int     teller;

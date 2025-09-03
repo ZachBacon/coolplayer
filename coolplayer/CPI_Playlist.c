@@ -101,7 +101,7 @@ typedef struct _CPs_NotifyChunk
 //
 //
 //
-CP_HPLAYLIST CPL_CreatePlaylist()
+CP_HPLAYLIST CPL_CreatePlaylist(void)
 {
 	CPs_Playlist* pNewPlaylist = (CPs_Playlist*)malloc(sizeof(CPs_Playlist));
 	pNewPlaylist->m_hFirst = NULL;
@@ -494,6 +494,8 @@ void CPL_AddSingleFile(CP_HPLAYLIST hPlaylist, const char* pcPath, const char* p
 //
 void CPL_HandleAsyncNotify(CP_HPLAYLIST hPlaylist, WPARAM wParam, LPARAM lParam)
 {
+	(void)hPlaylist;  // Suppress unused parameter warning
+	(void)lParam;     // Suppress unused parameter warning
 	CPs_NotifyChunk* pChunk = (CPs_NotifyChunk*)wParam;
 	int iChunkItemIDX;
 	
@@ -1224,7 +1226,7 @@ void CPL_AddFile(CP_HPLAYLIST hPlaylist, const char* pcFilename)
 					
 					// Is there a file on this line (strip whitespace from start)
 					
-					if (sscanf(pcPlaylistBuffer + iLastLineStartIDX, " %512[^\r\n]", cBuffer) == 1)
+					if (sscanf(pcPlaylistBuffer + iLastLineStartIDX, " %511[^\r\n]", cBuffer) == 1)
 					{
 						// Something has been read - ignore lines starting with #
 						if (cBuffer[0] != '#')
@@ -1275,7 +1277,7 @@ void CPL_AddFile(CP_HPLAYLIST hPlaylist, const char* pcFilename)
 							
 							// Is there a file on this line (strip whitespace from start)
 							
-							if (sscanf(pcPlaylistBuffer + iLastLineStartIDX, " %512[^\r\n]", cBuffer) == 1)
+							if (sscanf(pcPlaylistBuffer + iLastLineStartIDX, " %511[^\r\n]", cBuffer) == 1)
 							{
 								// Something has been read - ignore lines starting with #
 								if (cBuffer[0] != '#')
@@ -1370,10 +1372,10 @@ int __cdecl cpl_sort_TrackStackPos(const void *e1, const void *e2)
 	if (pElem1->m_iTrackStackPos == pElem2->m_iTrackStackPos)
 		return 0;
 		
-	if (pElem1->m_iTrackStackPos == CIC_TRACKSTACK_UNSTACKED)
+	if ((unsigned int)pElem1->m_iTrackStackPos == CIC_TRACKSTACK_UNSTACKED)
 		return 1;
 		
-	if (pElem2->m_iTrackStackPos == CIC_TRACKSTACK_UNSTACKED)
+	if ((unsigned int)pElem2->m_iTrackStackPos == CIC_TRACKSTACK_UNSTACKED)
 		return -1;
 		
 	if (pElem1->m_iTrackStackPos > pElem2->m_iTrackStackPos)
@@ -1523,6 +1525,8 @@ int __cdecl cpl_sort_Comment(const void *e1, const void *e2)
 //
 int __cdecl cpl_sort_Random(const void *e1, const void *e2)
 {
+	(void)e1;  // Suppress unused parameter warning
+	(void)e2;  // Suppress unused parameter warning
 	const unsigned short r1 = rand();
 	const unsigned short r2 = rand();
 	
@@ -2427,6 +2431,7 @@ void CPL_SyncLoadNextFile(CP_HPLAYLIST hPlaylist)
 //
 void CPL_SetAutoActivateInitial(CP_HPLAYLIST hPlaylist, const BOOL bAutoActivateInitial)
 {
+	(void)bAutoActivateInitial;  // Suppress unused parameter warning
 	CPs_Playlist* pPlaylist = (CPs_Playlist*)hPlaylist;
 	CP_CHECKOBJECT(pPlaylist);
 	

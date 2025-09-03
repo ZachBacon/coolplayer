@@ -75,7 +75,7 @@ void CPL_cb_OnPlaylistItemDelete(const CP_HPLAYLISTITEM hItem)
 //
 //
 //
-void CPL_cb_OnPlaylistEmpty()
+void CPL_cb_OnPlaylistEmpty(void)
 {
 	if (globals.m_hPlaylistViewControl)
 		CLV_RemoveAllItems(globals.m_hPlaylistViewControl);
@@ -86,6 +86,8 @@ void CPL_cb_OnPlaylistEmpty()
 //
 void CPL_cb_OnPlaylistActivationChange(const CP_HPLAYLISTITEM hItem, const BOOL bNewActiveState)
 {
+	(void)hItem; // Suppress unused parameter warning
+	
 	if (bNewActiveState == TRUE)
 	{
 		main_update_title_text();
@@ -97,7 +99,7 @@ void CPL_cb_OnPlaylistActivationChange(const CP_HPLAYLISTITEM hItem, const BOOL 
 //
 //
 //
-void CPL_cb_OnPlaylistActivationEmpty()
+void CPL_cb_OnPlaylistActivationEmpty(void)
 {
 	main_update_title_text();
 	main_draw_title(windows.wnd_main);
@@ -107,7 +109,7 @@ void CPL_cb_OnPlaylistActivationEmpty()
 //
 //
 //
-void CPL_cb_SetWindowToReflectList()
+void CPL_cb_SetWindowToReflectList(void)
 {
 	CP_HPLAYLISTITEM hCursor;
 	CP_HPLAYLISTITEM hSelected;
@@ -149,7 +151,7 @@ void CPL_cb_LockWindowUpdates(const BOOL bLock)
 //
 //
 //
-void CPL_cb_TrackStackChanged()
+void CPL_cb_TrackStackChanged(void)
 {
 	if (globals.m_hPlaylistViewControl)
 		CLV_Invalidate(globals.m_hPlaylistViewControl);

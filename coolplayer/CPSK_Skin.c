@@ -33,7 +33,7 @@ CPs_Skin* glb_pSkin = NULL;
 //
 //
 //
-void CPSK_Initialise()
+void CPSK_Initialise(void)
 {
 	char* pcSkinFile;
 	unsigned int iFileSize;
@@ -53,7 +53,7 @@ void CPSK_Initialise()
 //
 //
 //
-void CPSK_Uninitialise()
+void CPSK_Uninitialise(void)
 {
 	if (glb_pSkin)
 		CPSK_DestroySkin(glb_pSkin);
@@ -137,6 +137,7 @@ COLORREF CPSK_DecodeColour(const char* pcColour)
 //
 void CPSK_ReadSkinCommand_Define(CP_COMPOSITEFILE hComposite, CPs_Skin* pSkin, const char* pcParams)
 {
+	(void)hComposite;  // Suppress unused parameter warning
 	char cSymbol[34];
 	char cValue[130];
 	
@@ -509,6 +510,7 @@ void CPSK_ReadSkinCommand_AddVerb(CP_COMPOSITEFILE hComposite, CPs_CommandTarget
 //
 void CPSK_ReadSkinCommand_AddIndicator(CP_COMPOSITEFILE hComposite, CPs_Skin* pSkin, const char* pcParams)
 {
+	(void)hComposite;  // Suppress unused parameter warning
 	char cElement[34];
 	char cAlign[130];
 	RECT rOffset;

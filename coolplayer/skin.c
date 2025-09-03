@@ -237,6 +237,7 @@ main_skin_set_struct_value(int object, int x, int y, int w, int h, int maxw, int
 
 int     main_skin_open(char *name)
 {
+	(void)name;  // Suppress unused parameter warning
 	char    pathbuf[MAX_PATH];
 	char    values[32768];
 	char   *textposition;

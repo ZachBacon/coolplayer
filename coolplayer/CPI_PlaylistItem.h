@@ -73,7 +73,7 @@ const char* CPLI_GetAlbum(const CP_HPLAYLISTITEM hItem);
 const char* CPLI_GetTrackName(const CP_HPLAYLISTITEM hItem);
 const char* CPLI_GetYear(const CP_HPLAYLISTITEM hItem);
 const char* CPLI_GetGenre(const CP_HPLAYLISTITEM hItem);
-const unsigned char CPLI_GetTrackNum(const CP_HPLAYLISTITEM hItem);
+unsigned char CPLI_GetTrackNum(const CP_HPLAYLISTITEM hItem);
 const char* CPLI_GetTrackNum_AsText(const CP_HPLAYLISTITEM hItem);
 const char* CPLI_GetComment(const CP_HPLAYLISTITEM hItem);
 int CPLI_GetTrackLength(const CP_HPLAYLISTITEM hItem);

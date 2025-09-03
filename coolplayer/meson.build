@@ -65,6 +65,7 @@ coolsrc = files([
     'CPI_Stream.c',
     'CPI_Stream_Internet.c',
     'CPI_Stream_LocalFile.c',
+    'CPString.c',
     'CPI_Verbs.c',
     'CPSK_Skin.c',
     'DLG_Find.c',
@@ -76,7 +77,6 @@ coolsrc = files([
     'shwapi.c',
     'skin.c',
     'stdafx.c',
-    'String.c',
     'WindowsOS.c'
 ])
 

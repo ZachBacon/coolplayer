@@ -38,11 +38,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 // One time calls (to initialise process wide structs)
-void IF_ProcessInit();
-void IF_ProcessDeInit();
+void IF_ProcessInit(void);
+void IF_ProcessDeInit(void);
 //
 // Interface basics
-CP_HINTERFACE IF_Create();
+CP_HINTERFACE IF_Create(const char* pcTitle, const RECT* pInitialSize, const DWORD dwStyle);
 void IF_OpenWindow(CP_HINTERFACE hInterface, const char* pcTitle, const RECT* pInitialSize, const DWORD dwStyle);
 void IF_CloseWindow(CP_HINTERFACE hInterface);
 void IF_SetVisible(CP_HINTERFACE hInterface, const BOOL bVisible);

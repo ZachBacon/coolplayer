@@ -48,7 +48,7 @@ typedef void* CP_HSYSICON;
 #include "CPI_Interface.h"
 #include "CPSK_Skin.h"
 #include "CLV_ListView.h"
-#include "String.h"
+#include "CPString.h"
 
 #define DO_STRINGIFY(x) #x
 #define STRINGIFY(x) DO_STRINGIFY(x)
@@ -323,8 +323,8 @@ int     main_skin_set_struct_value(int object, int x, int y, int w, int h,
 								   int maxw, int x2, int y2, int w2,
 								   int h2, char *tooltip);
 int     playlist_open_file(BOOL clearlist);
-int     playlist_skin_read();
-int     playlist_write();
+int     playlist_skin_read(void);
+int     playlist_write(void);
 int     window_bmp_blt(HWND hWnd, HBITMAP SrcBmp, int srcx, int srcy,
 					   int srcw, int srch, int dstx, int dsty);
 int  window_bmp_transparent_blt(HWND hWnd, HBITMAP SrcBmp, int srcx, int srcy, int srcw, int srch, int dstx, int dsty);
@@ -340,7 +340,7 @@ INT_PTR CALLBACK about_windowproc(HWND hwndDlg, UINT msg, WPARAM wParam,
 //LRESULT CALLBACK playlist_windowproc(HWND hwndDlg, UINT msg, WPARAM wParam,
 //									 LPARAM lParam);
 void    cmdline_usage(HWND);
-void    main_update_title_text();
+void    main_update_title_text(void);
 void    main_draw_bitrate(HWND hWnd);
 void    playlist_draw_control(UINT controlid, LPDRAWITEMSTRUCT ds);
 void    main_draw_controls_all(HWND hWnd);

@@ -120,6 +120,10 @@ void CPP_OMWAV_Uninitialise(CPs_CoDecModule* pModule)
 BOOL CPP_OMWAV_OpenFile(CPs_CoDecModule* pModule, const char* pcFilename, DWORD dwCookie, HWND hWndOwner)
 {
 	CPs_CoDec_Wave *pContext = (CPs_CoDec_Wave*)pModule->m_pModuleCookie;
+	
+	(void)dwCookie; // Suppress unused parameter warning
+	(void)hWndOwner; // Suppress unused parameter warning
+	
 	CP_CHECKOBJECT(pContext);
 	
 	// If we have a stream open - close it

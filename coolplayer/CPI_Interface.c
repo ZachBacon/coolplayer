@@ -120,7 +120,7 @@ HWND IF_GetHWnd(CP_HINTERFACE hInterface)
 //
 //
 //
-void IF_ProcessInit()
+void IF_ProcessInit(void)
 {
 	WNDCLASS wcPlaylist;
 	wcPlaylist.style = 0L;
@@ -139,7 +139,7 @@ void IF_ProcessInit()
 //
 //
 //
-void IF_ProcessDeInit()
+void IF_ProcessDeInit(void)
 {
 	UnregisterClass(CLC_COOLPLAYER_INTERFACECLASSNAME, GetModuleHandle(NULL));
 }

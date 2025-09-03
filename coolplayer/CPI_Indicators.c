@@ -59,7 +59,7 @@ CPs_IndicatorBinding* glb_pIndicatorBinding = NULL;
 //
 //
 //
-void CPIC_FreeIndicators()
+void CPIC_FreeIndicators(void)
 {
 	CPs_IndicatorValue* pValueCursor;
 	CPs_IndicatorValue* pValueCursor_next;

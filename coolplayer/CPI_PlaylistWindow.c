@@ -101,12 +101,12 @@ void CPlaylistWindow_CB_onMouseButton_LUp(CP_HINTERFACE hInterface, const POINTS
 LRESULT CPlaylistWindow_CB_onAppMessage(CP_HINTERFACE hInterface, const UINT uiMessage, const WPARAM wParam, const LPARAM lParam);
 void CPlaylistWindow_CB_onClose(CP_HINTERFACE hInterface);
 //
-void CPlaylistWindow_CreateSubparts();
+void CPlaylistWindow_CreateSubparts(void);
 ////////////////////////////////////////////////////////////////////////////////
 //
 //
 //
-void CPlaylistWindow_Create()
+void CPlaylistWindow_Create(void)
 {
 	// Init playlist window state
 	glb_PLW_State.m_enWindowMode = wmQuiescent;
@@ -115,7 +115,7 @@ void CPlaylistWindow_Create()
 	glb_PLW_State.m_bMouseEventSet = FALSE;
 	
 	// Create user interface window
-	windows.m_hifPlaylist = IF_Create();
+	windows.m_hifPlaylist = IF_Create("CoolPlayer Playlist", &options.playlist_window_pos, CPC_INTERFACE_STYLE_RESIZING);
 	IF_sethandler_onCreate(windows.m_hifPlaylist, CPlaylistWindow_CB_onCreate);
 	IF_sethandler_onDraw(windows.m_hifPlaylist, CPlaylistWindow_CB_onDraw);
 	IF_sethandler_onKeyDown(windows.m_hifPlaylist, CPlaylistWindow_CB_onKeyDown);
@@ -137,7 +137,7 @@ void CPlaylistWindow_Create()
 //
 //
 //
-void CPlaylistWindow_Destroy()
+void CPlaylistWindow_Destroy(void)
 {
 	// Cleanup windows
 	IF_CloseWindow(windows.m_hifPlaylist);
@@ -147,7 +147,7 @@ void CPlaylistWindow_Destroy()
 //
 //
 //
-void CPlaylistWindow_CreateSubparts()
+void CPlaylistWindow_CreateSubparts(void)
 {
 
 	IF_RemoveAllSubparts(windows.m_hifPlaylist);
@@ -190,7 +190,7 @@ void CPlaylistWindow_SetVisible(const BOOL bNewVisibleState)
 //
 //
 //
-void CPlaylistWindow_CreateListView()
+void CPlaylistWindow_CreateListView(void)
 {
 	RECT rClient;
 	int iColumnIDX;
@@ -295,7 +295,7 @@ int __cdecl exp_CompareStrings(const void *elem1, const void *elem2)
 //
 //
 //
-void CPlaylistWindow_DestroyIPEdit()
+void CPlaylistWindow_DestroyIPEdit(void)
 {
 	HWND hWnd_IPEdit;
 	
@@ -1310,7 +1310,7 @@ void LVCB_UnhandledKeyPress(CP_HLISTVIEW _hListData, const int iVKey, const BOOL
 //
 //
 //
-void CPlaylistWindow_ClearSelectedItems()
+void CPlaylistWindow_ClearSelectedItems(void)
 {
 	int iSearchItemIDX;
 	int iFocusItem;
@@ -1463,7 +1463,7 @@ CPe_CustomDrawColour LVCB_GetTrackStackItemColour(const void* pvItemData)
 	
 	iTrackStackPos = CPLI_GetTrackStackPos(hItem);
 	
-	if (iTrackStackPos == CIC_TRACKSTACK_UNSTACKED)
+	if ((unsigned int)iTrackStackPos == CIC_TRACKSTACK_UNSTACKED)
 		return cdcNormal;
 	else if (iTrackStackPos == 0)
 		return cdcHighlighted;

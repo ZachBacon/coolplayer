@@ -163,6 +163,7 @@ void IPCB_onMouseOut(CP_HINTERFACEPART hPart)
 //
 void IPCB_onMouseButton_LDown(CP_HINTERFACEPART hPart, const POINTS ptMouse)
 {
+	(void)ptMouse;  // Suppress unused parameter warning
 	CPs_InterfacePart* pIP;
 	CPs_IPCommandButton* pIPCB;
 	
@@ -186,6 +187,7 @@ void IPCB_onMouseButton_LDown(CP_HINTERFACEPART hPart, const POINTS ptMouse)
 //
 void IPCB_onMouseButton_LUp(CP_HINTERFACEPART hPart, const POINTS ptMouse)
 {
+	(void)ptMouse;  // Suppress unused parameter warning
 	CPs_InterfacePart* pIP;
 	CPs_IPCommandButton* pIPCB;
 	

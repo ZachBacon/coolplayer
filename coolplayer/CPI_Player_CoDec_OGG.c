@@ -123,6 +123,7 @@ CPs_InStream* gInStream = NULL;
 
 size_t CPP_OMOGG_cbRead(void *buffer, size_t size, size_t amount, void *file)
 {
+	(void)file;  // Suppress unused parameter warning
 	size_t result = 0;
 	gInStream->Read(gInStream, buffer, size*amount, &result);
 	return result;
@@ -130,6 +131,7 @@ size_t CPP_OMOGG_cbRead(void *buffer, size_t size, size_t amount, void *file)
 
 int CPP_OMOGG_cbSeek(void *file, ogg_int64_t newpos, int set)
 {
+	(void)file;  // Suppress unused parameter warning
 	if (!gInStream->IsSeekable(gInStream)) return -1;
 	
 	if (set == SEEK_END)
@@ -142,6 +144,7 @@ int CPP_OMOGG_cbSeek(void *file, ogg_int64_t newpos, int set)
 
 int CPP_OMOGG_cbClose(void *file)
 {
+	(void)file;  // Suppress unused parameter warning
 	gInStream->Uninitialise(gInStream);
 	return 1;
 	
@@ -150,6 +153,7 @@ int CPP_OMOGG_cbClose(void *file)
 
 long CPP_OMOGG_cbTell(void *file)
 {
+	(void)file;  // Suppress unused parameter warning
 	return gInStream->Tell(gInStream);
 }
 
@@ -158,6 +162,7 @@ long CPP_OMOGG_cbTell(void *file)
 //
 BOOL CPP_OMOGG_OpenFile(CPs_CoDecModule* pModule, const char* pcFilename, DWORD dwCookie, HWND hWndOwner)
 {
+	(void)dwCookie;  // Suppress unused parameter warning
 	vorbis_info *pInfo = NULL;
 	CPs_CoDec_Ogg *pContext = (CPs_CoDec_Ogg*)pModule->m_pModuleCookie;
 	

@@ -160,7 +160,7 @@ DWORD   main_get_program_path(HINSTANCE hInst, LPTSTR pszBuffer,
 //
 //
 //
-int playlist_write()
+int playlist_write(void)
 {
 	OPENFILENAME fn;
 	BOOL bResult;
@@ -204,7 +204,7 @@ int playlist_write()
 //
 //
 //
-void main_update_title_text()
+void main_update_title_text(void)
 {
 	int     teller;
 	HBITMAP h, h2;
@@ -214,10 +214,7 @@ void main_update_title_text()
 	int     width;
 	CP_HPLAYLISTITEM hItem_Current;
 	HDC SongtitleDc;
-	int iG;
 	RECT rect;
-	
-	iG = Skin.Object[SongtitleText].w;
 	
 	hItem_Current = CPL_GetActiveItem(globals.m_hPlaylist);
 	
@@ -730,6 +727,8 @@ void    main_draw_vu_from_value(HWND hWnd, int vunummer, int vuwaarde)
 BOOL    main_draw_vu_all(HWND hWnd, WPARAM wParam, LPARAM lParam,
 						 BOOL rememberlastval)
 {
+	(void)wParam;         // Suppress unused parameter warning
+	(void)rememberlastval; // Suppress unused parameter warning
 	POINTS  cursorpos;
 	int     teller;
 	int     moveit = TRUE;
@@ -882,6 +881,7 @@ BOOL    main_draw_vu_all(HWND hWnd, WPARAM wParam, LPARAM lParam,
 
 int window_bmp_blt(HWND hWnd, HBITMAP SrcBmp, int srcx, int srcy, int srcw, int srch, int dstx, int dsty)
 {
+	(void)hWnd;  // Suppress unused parameter warning
 	if (srcw && srch)
 	{
 		HBITMAP h = (HBITMAP) SelectObject(drawables.dc_memory, SrcBmp);
@@ -1080,9 +1080,9 @@ void    main_menuproc(HWND hWnd, LPPOINT points)
 					(globals.main_menu_popup, retval, NULL, 0, MF_BYCOMMAND))
 			{
 				GetMenuString(globals.main_menu_popup, retval,
-							  options.main_skin_file, MAX_PATH,
+							  (char*)options.main_skin_file, MAX_PATH,
 							  MF_BYCOMMAND);
-				main_skin_select_menu(options.main_skin_file);
+				main_skin_select_menu((char*)options.main_skin_file);
 				options.use_default_skin = FALSE;
 				globals.main_bool_skin_next_is_default = FALSE;
 				main_play_control(ID_LOADSKIN, hWnd);
@@ -1741,9 +1741,9 @@ int     main_play_control(WORD wParam, HWND hWnd)
 			if (options.use_default_skin == FALSE)
 			{
 				char    skinpathje[MAX_PATH];
-				strcpy(skinpathje, options.main_skin_file);
+				strcpy(skinpathje, (const char*)options.main_skin_file);
 				
-				if (main_skin_open(options.main_skin_file) == FALSE)
+				if (main_skin_open((char*)options.main_skin_file) == FALSE)
 					main_set_default_skin();
 				else
 				{
@@ -1909,7 +1909,7 @@ int     cmdline_parse_options(int argc, char **argv, HWND hWnd)
 				if (stricmp(argv[i], "default") == 0)
 					*value = TRUE;
 				else
-					strcpy(options.main_skin_file, argv[i]);
+					strcpy((char*)options.main_skin_file, argv[i]);
 			}
 			
 			if (value == &globals.main_int_show_minimized)
@@ -2031,6 +2031,7 @@ int     cmdline_parse_files(int argc, char **argv)
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	(void)hPrevInstance;  // Suppress unused parameter warning
 	WNDCLASS wc;
 	HWND    hWnd;
 	MSG     msg;
@@ -2038,7 +2039,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	INITCOMMONCONTROLSEX controls;
 	HMENU   hpopup;
 	BOOL    bAlreadyRuning;
-	HANDLE  hMutexOneInstance;
 	HWND hWndCoolPlayer = NULL;
 	
 	// Ensure that this system is audio capable
@@ -2050,7 +2050,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	
 	options_read();
 	
-	hMutexOneInstance = CreateMutex(NULL, FALSE, CLC_COOLPLAYER_MUTEX);
+	CreateMutex(NULL, FALSE, CLC_COOLPLAYER_MUTEX);
 	bAlreadyRuning = (GetLastError() == ERROR_ALREADY_EXISTS
 					  || GetLastError() == ERROR_ACCESS_DENIED);
 	// The call fails with ERROR_ACCESS_DENIED if the Mutex was
@@ -2163,9 +2163,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (*options.main_skin_file && options.use_default_skin == FALSE)
 	{
 		char    lastskinfile[MAX_PATH];
-		strcpy(lastskinfile, options.main_skin_file);
+		strcpy(lastskinfile, (const char*)options.main_skin_file);
 		
-		if (main_skin_open(options.main_skin_file) == FALSE)
+		if (main_skin_open((char*)options.main_skin_file) == FALSE)
 		{
 			main_set_default_skin();
 		}

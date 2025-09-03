@@ -32,7 +32,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-void CPIC_FreeIndicators();
+void CPIC_FreeIndicators(void);
 void CPIC_SetIndicatorValue(const char* pcName, const char* pcValue);
 const char* CPIC_GetIndicatorValue(const char* pcName);
 void CPIC_BindIndicatorToControl(const char* pcName, CP_HINTERFACEPART hPart);

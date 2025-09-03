@@ -1,4 +1,3 @@
-
 /*
  * CoolPlayer - Blazing fast audio player.
  * Copyright (C) 2000-2001 Niek Albers
@@ -21,21 +20,43 @@
 
 
 
-
-////////////////////////////////////////////////////////////////////////////////
-//
-// Cooler Playlist Window
-//
-////////////////////////////////////////////////////////////////////////////////
-
+#include "stdafx.h"
+#include "globals.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-void CPlaylistWindow_Create(void);
-void CPlaylistWindow_Destroy(void);
-void CPlaylistWindow_SetVisible(const BOOL bNewVisibleState);
-void CPlaylistWindow_ClearSelectedItems(void);
-BOOL CPlaylistWindow_OffsetSelectedItems(const int iOffset);
 //
-////////////////////////////////////////////////////////////////////////////////
+//
+unsigned int STR_AllocSetString(char** ppcDest, const char* pcSource, const BOOL bFreeExisting)
+{
+	if (bFreeExisting == TRUE && *ppcDest)
+		free(*ppcDest);
+		
+	if (pcSource)
+	{
+		unsigned int uStringLength;
+		
+		uStringLength = strlen(pcSource) + 1;
+		*ppcDest = (char*)malloc(uStringLength);
+		
+		if (!*ppcDest)
+		{
+			// Failed to allocate memory, a memcpy here would be fatal.
+			return 0;
+		}
+		
+		memcpy(*ppcDest, pcSource, uStringLength);
+		
+		return uStringLength;
+	}
+	
+	*ppcDest = NULL;
+	
+	return 0;
+}
+
+//
+//
+//
+

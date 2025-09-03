@@ -37,9 +37,9 @@ void* __cdecl memmove(void*, const void*, size_t);
 char* __cdecl strchr(const char*, int) ;
 char* __cdecl strrchr(const char*, int) ;
 char* __cdecl strstr(const char*, const char*);
-int __cdecl _stricmp(const char*, const char*);
-int __cdecl _strnicmp(const char*, const char*, size_t);
-int __cdecl tolower(int);
+// int __cdecl _stricmp(const char*, const char*); // Commented out to avoid dllimport conflict
+// int __cdecl _strnicmp(const char*, const char*, size_t); // Commented out to avoid dllimport conflict
+// int __cdecl tolower(int); // Commented out to avoid dllimport conflict
 #endif
 #if 0
 char* __cdecl strncat(char*, const char*, size_t);

@@ -53,43 +53,83 @@ int CPP_OMAPLG_GetCurrentPos_secs(CPs_CoDecModule* pModule);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Dummy functions used by the in module (but we don't need 'em)
-void CP_Dummy_SAVSAInit(int maxlatency_in_ms, int srate) {}
+void CP_Dummy_SAVSAInit(int maxlatency_in_ms, int srate) 
+{
+	(void)maxlatency_in_ms; // Suppress unused parameter warning
+	(void)srate; // Suppress unused parameter warning
+}
 
-void CP_Dummy_SAVSADeInit() {}
+void CP_Dummy_SAVSADeInit(void) {}
 
-void CP_Dummy_SAAddPCMData(void *PCMData, int nch, int bps, int timestamp) {}
+void CP_Dummy_SAAddPCMData(void *PCMData, int nch, int bps, int timestamp) 
+{
+	(void)PCMData; // Suppress unused parameter warning
+	(void)nch; // Suppress unused parameter warning
+	(void)bps; // Suppress unused parameter warning
+	(void)timestamp; // Suppress unused parameter warning
+}
 
-int CP_Dummy_SAGetMode()
+int CP_Dummy_SAGetMode(void)
 {
 	return 0;
 }
 
-void CP_Dummy_SAAdd(void *data, int timestamp, int csa) {}
+void CP_Dummy_SAAdd(void *data, int timestamp, int csa) 
+{
+	(void)data; // Suppress unused parameter warning
+	(void)timestamp; // Suppress unused parameter warning
+	(void)csa; // Suppress unused parameter warning
+}
 
-void CP_Dummy_VSAAddPCMData(void *PCMData, int nch, int bps, int timestamp) {}
+void CP_Dummy_VSAAddPCMData(void *PCMData, int nch, int bps, int timestamp) 
+{
+	(void)PCMData; // Suppress unused parameter warning
+	(void)nch; // Suppress unused parameter warning
+	(void)bps; // Suppress unused parameter warning
+	(void)timestamp; // Suppress unused parameter warning
+}
 
 int CP_Dummy_VSAGetMode(int *specNch, int *waveNch)
 {
+	(void)specNch; // Suppress unused parameter warning
+	(void)waveNch; // Suppress unused parameter warning
 	return 0;
 }
 
-void CP_Dummy_VSAAdd(void *data, int timestamp) {}
+void CP_Dummy_VSAAdd(void *data, int timestamp) 
+{
+	(void)data; // Suppress unused parameter warning
+	(void)timestamp; // Suppress unused parameter warning
+}
 
-int CP_Dummy_dsp_isactive()
+int CP_Dummy_dsp_isactive(void)
 {
 	return 0;
 }
 
 int CP_Dummy_dsp_dosamples(short int *samples, int numsamples, int bps, int nch, int srate)
 {
+	(void)samples; // Suppress unused parameter warning
+	(void)numsamples; // Suppress unused parameter warning
+	(void)bps; // Suppress unused parameter warning
+	(void)nch; // Suppress unused parameter warning
+	(void)srate; // Suppress unused parameter warning
 	return 0;
 }
 
 //
-void CP_Dummy_VSASetInfo(int nch, int srate) {}
+void CP_Dummy_VSASetInfo(int nch, int srate) 
+{
+	(void)nch; // Suppress unused parameter warning
+	(void)srate; // Suppress unused parameter warning
+}
 
 int CP_Dummy_SetInfo(int bitrate, int srate, int stereo, int synched)
 {
+	(void)bitrate; // Suppress unused parameter warning
+	(void)srate; // Suppress unused parameter warning
+	(void)stereo; // Suppress unused parameter warning
+	(void)synched; // Suppress unused parameter warning
 	return 0;
 }
 
@@ -97,19 +137,26 @@ int CP_Dummy_SetInfo(int bitrate, int srate, int stereo, int synched)
 // Dummy output functions
 int CP_Dummy_Pause(int pause)
 {
+	(void)pause; // Suppress unused parameter warning
 	return 0;
 }
 
-void CP_Dummy_SetVolume(int volume) {}
+void CP_Dummy_SetVolume(int volume) 
+{
+	(void)volume; // Suppress unused parameter warning
+}
 
-void CP_Dummy_SetPan(int pan) {}
+void CP_Dummy_SetPan(int pan) 
+{
+	(void)pan; // Suppress unused parameter warning
+}
 
-int CP_Dummy_GetOutputTime()
+int CP_Dummy_GetOutputTime(void)
 {
 	return 0;
 }
 
-int CP_Dummy_GetWrittenTime()
+int CP_Dummy_GetWrittenTime(void)
 {
 	return 0;
 }
@@ -175,6 +222,9 @@ int CP_OutPI_Open(int samplerate, int numchannels, int bitspersamp, int bufferle
 	// bufferlenms and prebufferms must be in ms. 0 to use defaults.
 	// prebufferms must be <= bufferlenms
 	
+	(void)bufferlenms; // Suppress unused parameter warning
+	(void)prebufferms; // Suppress unused parameter warning
+	
 	if (bitspersamp != 8 && bitspersamp != 16)
 	{
 		CP_TRACE0("Inappropriate stream type");
@@ -208,7 +258,7 @@ int CP_OutPI_Open(int samplerate, int numchannels, int bitspersamp, int bufferle
 //
 //
 //
-void CP_OutPI_Close()
+void CP_OutPI_Close(void)
 {
 	CP_TRACE0("CP_OutPI_Close");
 	EnterCriticalSection(&glb_OutputData.m_csGlobal);
@@ -222,7 +272,7 @@ void CP_OutPI_Close()
 //
 //
 //
-int CP_OutPI_CanWrite()
+int CP_OutPI_CanWrite(void)
 {
 	int iNumBytesFree;
 	// returns number of bytes possible to write at a given time.
@@ -288,7 +338,7 @@ void CP_OutPI_Flush(int iNewTime)
 //
 //
 //
-int CP_OutPI_IsPlaying()
+int CP_OutPI_IsPlaying(void)
 {
 	CP_TRACE0("CP_OutPI_IsPlaying");
 	EnterCriticalSection(&glb_OutputData.m_csGlobal);
@@ -307,7 +357,7 @@ int CP_OutPI_IsPlaying()
 
 
 #define CP_INVALIDCHARPOS -1
-typedef In_Module*(*wp_winampGetInModule2)();
+typedef In_Module*(*wp_winampGetInModule2)(void);
 ////////////////////////////////////////////////////////////////////////////////
 //
 //
@@ -606,7 +656,7 @@ void CPP_OMAPLG_Uninitialise(CPs_CoDecModule* pModule)
 //
 //
 //
-void InitialiseGlobalData()
+void InitialiseGlobalData(void)
 {
 	EnterCriticalSection(&glb_OutputData.m_csGlobal);
 	
@@ -629,7 +679,7 @@ void InitialiseGlobalData()
 //
 //
 //
-void UnitialiseGlobalData()
+void UnitialiseGlobalData(void)
 {
 	EnterCriticalSection(&glb_OutputData.m_csGlobal);
 	
@@ -718,6 +768,9 @@ BOOL CPP_OMAPLG_OpenFile(CPs_CoDecModule* pModule, const char* pcFilename, DWORD
 	CPs_CoDec_WinAmpPlugin *pContext = (CPs_CoDec_WinAmpPlugin*)pModule->m_pModuleCookie;
 	CP_PlugInModule* pSelectedPlugInModule = (CP_PlugInModule*)dwCookie;
 	int iError;
+	
+	(void)hWndOwner; // Suppress unused parameter warning
+	
 	CP_CHECKOBJECT(pContext);
 	
 	if (!pSelectedPlugInModule) return FALSE;
@@ -805,6 +858,8 @@ void CPP_OMAPLG_Seek(CPs_CoDecModule* pModule, const int iNumerator, const int i
 BOOL CPP_OMAPLG_GetPCMBlock(CPs_CoDecModule* pModule, void* _pBlock, DWORD* pdwBlockSize)
 {
 	size_t bytes;
+	
+	(void)pModule; // Suppress unused parameter warning
 	BOOL reply;
 	
 #ifdef _DEBUG
@@ -857,6 +912,8 @@ int CPP_OMAPLG_GetCurrentPos_secs(CPs_CoDecModule* pModule)
 	CPs_CoDec_WinAmpPlugin *pContext = (CPs_CoDec_WinAmpPlugin*)pModule->m_pModuleCookie;
 	CP_CHECKOBJECT(pContext);
 	CP_ASSERT(pContext->m_pActivePluginModule);
+#else
+	(void)pModule; // Suppress unused parameter warning in release builds
 #endif
 	
 	EnterCriticalSection(&glb_OutputData.m_csGlobal);

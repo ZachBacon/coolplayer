@@ -57,4 +57,4 @@ extern wp_MonitorFromWindow pfnMonitorFromWindow;
 extern wp_TrackMouseEvent pfnTrackMouseEvent;
 //
 ////////////////////////////////////////////////////////////////////////////////
-void CP_InitWindowsRoutines();
+void CP_InitWindowsRoutines(void);

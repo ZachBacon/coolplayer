@@ -187,6 +187,7 @@ void CPI_Player__ReopenMixer(CP_HPLAYER hPlayer)
 				dwLineID = mixerline.dwLineID;
 				
 				dwNumControls = mixerline.cControls;
+				(void)dwNumControls;  // Suppress unused variable warning
 			}
 			
 			// Get the controlID of the volume fader
@@ -436,6 +437,7 @@ void CPI_Player__AssociateFileExtensions(CP_HPLAYER hPlayer)
 //
 BOOL CPI_Player__HandleNotifyMessages(CP_HPLAYER hPlayer, UINT uiMessage, WPARAM wParam, LPARAM lParam, LRESULT* plResult)
 {
+	(void)plResult;  // Suppress unused parameter warning
 	// Skip message if it isn't for us
 	if ((uiMessage < CPNM_first || uiMessage > CPNM_last)
 			&& uiMessage != MM_MIXM_CONTROL_CHANGE)

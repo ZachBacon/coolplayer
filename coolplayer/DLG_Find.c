@@ -29,7 +29,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-void Search_SelectItems();
+void Search_SelectItems(void);
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -196,13 +196,13 @@ char* CP_stristr(const char *pcString1, const char *pcString2)
 //
 //
 //
-void Search_SelectItems()
+void Search_SelectItems(void)
 {
 	CP_HPLAYLISTITEM hCursor;
 	BOOL bFirstMatch = TRUE;
 	char* pcTerm;
 	unsigned int iEditTextLength;
-	BOOL bTitles, bAlbums, bArtists;
+	BOOL bTitles, bArtists;
 	
 	// Get search term
 	iEditTextLength = (int)SendDlgItemMessage(windows.m_hWndFindDialog, IDC_FND_TEXT, WM_GETTEXTLENGTH, 0L, 0L);
@@ -212,7 +212,6 @@ void Search_SelectItems()
 	// Get search filter
 	bTitles = SendDlgItemMessage(windows.m_hWndFindDialog, IDC_QFND_TITLES, BM_GETCHECK, 0L, 0L) == BST_CHECKED ? TRUE : FALSE;
 	bArtists = SendDlgItemMessage(windows.m_hWndFindDialog, IDC_QFND_ARTISTS, BM_GETCHECK, 0L, 0L) == BST_CHECKED ? TRUE : FALSE;
-	bAlbums = SendDlgItemMessage(windows.m_hWndFindDialog, IDC_QFND_ALBUMS, BM_GETCHECK, 0L, 0L) == BST_CHECKED ? TRUE : FALSE;
 	
 	// Perform select/search
 	

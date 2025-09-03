@@ -94,6 +94,8 @@ FLAC__StreamDecoderReadStatus flac_read_callback(const FLAC__StreamDecoder *deco
 	CPs_CoDec_FLAC *pContext = (CPs_CoDec_FLAC*)client_data;
 	size_t bytes_read = 0;
 	
+	(void)decoder; // Suppress unused parameter warning
+	
 	if(!pContext || !pContext->m_pInStream || *bytes == 0)
 	{
 		*bytes = 0;
@@ -116,6 +118,8 @@ FLAC__StreamDecoderSeekStatus flac_seek_callback(const FLAC__StreamDecoder *deco
 {
 	CPs_CoDec_FLAC *pContext = (CPs_CoDec_FLAC*)client_data;
 	
+	(void)decoder; // Suppress unused parameter warning
+	
 	if(!pContext->m_pInStream || !pContext->m_pInStream->IsSeekable(pContext->m_pInStream))
 		return FLAC__STREAM_DECODER_SEEK_STATUS_UNSUPPORTED;
 	
@@ -127,6 +131,8 @@ FLAC__StreamDecoderSeekStatus flac_seek_callback(const FLAC__StreamDecoder *deco
 FLAC__StreamDecoderTellStatus flac_tell_callback(const FLAC__StreamDecoder *decoder, FLAC__uint64 *absolute_byte_offset, void *client_data)
 {
 	CPs_CoDec_FLAC *pContext = (CPs_CoDec_FLAC*)client_data;
+	
+	(void)decoder; // Suppress unused parameter warning
 	
 	if(!pContext->m_pInStream)
 		return FLAC__STREAM_DECODER_TELL_STATUS_UNSUPPORTED;
@@ -140,6 +146,8 @@ FLAC__StreamDecoderLengthStatus flac_length_callback(const FLAC__StreamDecoder *
 {
 	CPs_CoDec_FLAC *pContext = (CPs_CoDec_FLAC*)client_data;
 	
+	(void)decoder; // Suppress unused parameter warning
+	
 	if(!pContext->m_pInStream)
 		return FLAC__STREAM_DECODER_LENGTH_STATUS_UNSUPPORTED;
 	
@@ -152,6 +160,8 @@ FLAC__bool flac_eof_callback(const FLAC__StreamDecoder *decoder, void *client_da
 {
 	CPs_CoDec_FLAC *pContext = (CPs_CoDec_FLAC*)client_data;
 	
+	(void)decoder; // Suppress unused parameter warning
+	
 	return pContext->eof_reached;
 }
 
@@ -161,6 +171,8 @@ FLAC__StreamDecoderWriteStatus flac_write_callback(const FLAC__StreamDecoder *de
 	unsigned int i, j;
 	unsigned int channels = frame->header.channels;
 	unsigned int samples = frame->header.blocksize;
+	
+	(void)decoder; // Suppress unused parameter warning
 	
 	// Ensure we have enough buffer space
 	unsigned int total_samples_needed = samples * channels;
@@ -195,6 +207,8 @@ void flac_metadata_callback(const FLAC__StreamDecoder *decoder, const FLAC__Stre
 {
 	CPs_CoDec_FLAC *pContext = (CPs_CoDec_FLAC*)client_data;
 	
+	(void)decoder; // Suppress unused parameter warning
+	
 	if(metadata->type == FLAC__METADATA_TYPE_STREAMINFO)
 	{
 		pContext->total_samples = metadata->data.stream_info.total_samples;
@@ -202,8 +216,8 @@ void flac_metadata_callback(const FLAC__StreamDecoder *decoder, const FLAC__Stre
 		pContext->channels = metadata->data.stream_info.channels;
 		pContext->bits_per_sample = metadata->data.stream_info.bits_per_sample;
 		
-		CP_TRACE4("FLAC stream info: %d Hz, %d channels, %d bits, %I64u samples", 
-			pContext->sample_rate, pContext->channels, pContext->bits_per_sample, pContext->total_samples);
+		CP_TRACE3("FLAC stream info: %d Hz, %d channels, %d bits", 
+			pContext->sample_rate, pContext->channels, pContext->bits_per_sample);
 		
 		// Fill in file info
 		pContext->m_FileInfo.m_iFreq_Hz = pContext->sample_rate;
@@ -234,7 +248,11 @@ void flac_metadata_callback(const FLAC__StreamDecoder *decoder, const FLAC__Stre
 
 void flac_error_callback(const FLAC__StreamDecoder *decoder, FLAC__StreamDecoderErrorStatus status, void *client_data)
 {
-	CP_TRACE1("FLAC decoder error: %s", FLAC__StreamDecoderErrorStatusString[status]);
+	(void)decoder; // Suppress unused parameter warning
+	(void)status; // Suppress unused parameter warning
+	(void)client_data; // Suppress unused parameter warning
+	
+	CP_TRACE0("FLAC decoder error occurred");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -301,6 +319,9 @@ BOOL CPP_OMFLAC_OpenFile(CPs_CoDecModule* pModule, const char* pcFilename, DWORD
 	CPs_CoDec_FLAC *pContext = (CPs_CoDec_FLAC*)pModule->m_pModuleCookie;
 	FLAC__StreamDecoderInitStatus init_status;
 	
+	(void)dwCookie; // Suppress unused parameter warning
+	(void)hWndOwner; // Suppress unused parameter warning
+	
 	CP_CHECKOBJECT(pContext);
 	
 	// If we have a stream open - close it
@@ -363,7 +384,8 @@ BOOL CPP_OMFLAC_OpenFile(CPs_CoDecModule* pModule, const char* pcFilename, DWORD
 	if(!FLAC__stream_decoder_process_until_end_of_metadata(pContext->decoder))
 	{
 		FLAC__StreamDecoderState state = FLAC__stream_decoder_get_state(pContext->decoder);
-		CP_TRACE1("Failed to process FLAC metadata, decoder state: %s", FLAC__StreamDecoderStateString[state]);
+		(void)state; // Suppress unused variable warning
+		CP_TRACE0("Failed to process FLAC metadata");
 		CPP_OMFLAC_CloseFile(pModule);
 		return FALSE;
 	}
